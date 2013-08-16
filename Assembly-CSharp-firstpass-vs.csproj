@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{CC0B3F40-54CB-A901-BB17-3C6CFFCD4CC8}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_WEBCAM;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;UNITY_4_2_0;UNITY_4_2;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="UnityEngine">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Plugins\Futile\Core\FAtlas.cs" />
+     <Compile Include="Assets\Plugins\Futile\Core\FAtlasManager.cs" />
+     <Compile Include="Assets\Plugins\Futile\Core\FFacetRenderLayer.cs" />
+     <Compile Include="Assets\Plugins\Futile\Core\FFacetType.cs" />
+     <Compile Include="Assets\Plugins\Futile\Core\FFont.cs" />
+     <Compile Include="Assets\Plugins\Futile\Core\FMatrix.cs" />
+     <Compile Include="Assets\Plugins\Futile\Core\FNodeEnabler.cs" />
+     <Compile Include="Assets\Plugins\Futile\Core\FRenderer.cs" />
+     <Compile Include="Assets\Plugins\Futile\Core\FScreen.cs" />
+     <Compile Include="Assets\Plugins\Futile\Core\FShader.cs" />
+     <Compile Include="Assets\Plugins\Futile\Core\FTouchManager.cs" />
+     <Compile Include="Assets\Plugins\Futile\Core\FutileException.cs" />
+     <Compile Include="Assets\Plugins\Futile\Core\FutileParams.cs" />
+     <Compile Include="Assets\Plugins\Futile\Display\FContainer.cs" />
+     <Compile Include="Assets\Plugins\Futile\Display\FFacetNode.cs" />
+     <Compile Include="Assets\Plugins\Futile\Display\FGameObjectNode.cs" />
+     <Compile Include="Assets\Plugins\Futile\Display\FLabel.cs" />
+     <Compile Include="Assets\Plugins\Futile\Display\FNode.cs" />
+     <Compile Include="Assets\Plugins\Futile\Display\FSprite.cs" />
+     <Compile Include="Assets\Plugins\Futile\Display\FStage.cs" />
+     <Compile Include="Assets\Plugins\Futile\Extras\FButton.cs" />
+     <Compile Include="Assets\Plugins\Futile\Extras\FParticleSystem.cs" />
+     <Compile Include="Assets\Plugins\Futile\Extras\FRadialWipeSprite.cs" />
+     <Compile Include="Assets\Plugins\Futile\Extras\FRepeatSprite.cs" />
+     <Compile Include="Assets\Plugins\Futile\Extras\FSliceButton.cs" />
+     <Compile Include="Assets\Plugins\Futile\Extras\FSliceSprite.cs" />
+     <Compile Include="Assets\Plugins\Futile\Extras\FSoundManager.cs" />
+     <Compile Include="Assets\Plugins\Futile\Extras\FUnityParticleSystemNode.cs" />
+     <Compile Include="Assets\Plugins\Futile\Extras\FWipeSprite.cs" />
+     <Compile Include="Assets\Plugins\Futile\Futile.cs" />
+     <Compile Include="Assets\Plugins\Futile\Helpers\FDebugFramerateGraph.cs" />
+     <Compile Include="Assets\Plugins\Futile\Physics\FPDebugRenderer.cs" />
+     <Compile Include="Assets\Plugins\Futile\Physics\FPDecomposer.cs" />
+     <Compile Include="Assets\Plugins\Futile\Physics\FPNodeLink.cs" />
+     <Compile Include="Assets\Plugins\Futile\Physics\FPPolygonalCollider.cs" />
+     <Compile Include="Assets\Plugins\Futile\Physics\FPPolygonalData.cs" />
+     <Compile Include="Assets\Plugins\Futile\Physics\FPUtils.cs" />
+     <Compile Include="Assets\Plugins\Futile\Physics\FPWorld.cs" />
+     <Compile Include="Assets\Plugins\Futile\Physics\FPhysics.cs" />
+     <Compile Include="Assets\Plugins\Futile\Rix\Editor\RXProfilerEditor.cs" />
+     <Compile Include="Assets\Plugins\Futile\Rix\Editor\RXWatcherLinkEditor.cs" />
+     <Compile Include="Assets\Plugins\Futile\Rix\RXDebug.cs" />
+     <Compile Include="Assets\Plugins\Futile\Rix\RXExtensions.cs" />
+     <Compile Include="Assets\Plugins\Futile\Rix\RXProfiler.cs" />
+     <Compile Include="Assets\Plugins\Futile\Rix\RXUtils.cs" />
+     <Compile Include="Assets\Plugins\Futile\Rix\RXWatcher.cs" />
+     <Compile Include="Assets\Plugins\Futile\ThirdParty\MiniJson.cs" />
+     <None Include="Assets\Resources\Atlases\MainSheet-res1.txt" />
+     <None Include="Assets\Resources\Atlases\MainSheet-res4.txt" />
+     <None Include="Assets\Plugins\Futile\Resources\Shaders\AdditiveColor.shader" />
+     <None Include="Assets\Plugins\Futile\Resources\Shaders\Additive.shader" />
+     <None Include="Assets\Resources\Atlases\MainSheet-res2.txt" />
+     <None Include="Assets\Plugins\Futile\Resources\Shaders\SolidColored.shader" />
+     <None Include="Assets\Plugins\Futile\Resources\Shaders\Basic.shader" />
+     <None Include="Assets\Resources\Atlases\franchise.txt" />
+     <None Include="Assets\Plugins\Futile\Resources\Shaders\Solid.shader" />
+ <Reference Include="Assets\Plugins\Futile\ThirdParty\GoKit">
+ <HintPath>Assets\Plugins\Futile\ThirdParty\GoKit.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>

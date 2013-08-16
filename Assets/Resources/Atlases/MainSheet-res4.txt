@@ -1,0 +1,28 @@
+{"frames": {
+
+"franchise.png":
+{
+	"frame": {"x":3,"y":3,"w":4072,"h":1382},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":4,"y":1,"w":4072,"h":1382},
+	"sourceSize": {"w":4096,"h":2048}
+},
+"whiteSquare.png":
+{
+	"frame": {"x":3,"y":1389,"w":50,"h":50},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":50,"h":50},
+	"sourceSize": {"w":50,"h":50}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker ",
+	"version": "1.0",
+	"image": "MainSheet-res4.png",
+	"format": "RGBA8888",
+	"size": {"w":4096,"h":2048},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:b4e9b27296892473ce8d21d1f2df98fb$"
+}
+}
