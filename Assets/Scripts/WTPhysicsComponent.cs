@@ -4,6 +4,8 @@ using System;
 
 public class WTPhysicsComponent : MonoBehaviour
 {
+	public event Action<Collision> SignalOnCollisionEnter;
+
 	public static WTPhysicsComponent Create(string name) {
 		GameObject physicsNodeGO = new GameObject(name);
 		WTPhysicsComponent physicsNode = physicsNodeGO.AddComponent<WTPhysicsComponent>();
@@ -84,7 +86,7 @@ public class WTPhysicsComponent : MonoBehaviour
 		return SetupPhysicMaterial(pm.bounciness, pm.dynamicFriction, pm.staticFriction, pm.frictionCombine);
 	}
 
-	public PhysicMaterial SetupPhysicMaterial(float bounciness, float dynamicFriction, float staticFriction, PhysicMaterialCombine frictionCombine) {
+	public PhysicMaterial SetupPhysicMaterial(float bounciness, float dynamicFriction, float staticFriction, PhysicMaterialCombine frictionCombine = PhysicMaterialCombine.Average) {
 		if (collider == null) throw new FutileException("must have collider before adding physicMaterial");
 		
 		PhysicMaterial physicMaterial = new PhysicMaterial();
@@ -97,7 +99,7 @@ public class WTPhysicsComponent : MonoBehaviour
 	}
 
 	void OnCollisionEnter(Collision coll) {
-
+		if (SignalOnCollisionEnter != null) SignalOnCollisionEnter(coll);
 	}
 
 	public void AddForce(float xForce, float yForce, ForceMode forceMode = ForceMode.Force) {

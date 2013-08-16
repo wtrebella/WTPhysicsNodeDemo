@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class WTMain : MonoBehaviour {
-	WTPhysicsNode frog;
-
 	void Start() {
 		Go.defaultEaseType = EaseType.SineInOut;
 
@@ -13,7 +11,7 @@ public class WTMain : MonoBehaviour {
 		fp.AddResolutionLevel(1136f, 2.0f, 2.0f, "-res2");
 		fp.AddResolutionLevel(2048f, 4.0f, 4.0f, "-res4");
 		
-		fp.backgroundColor = Color.black;
+		fp.backgroundColor = Color.white;
 		fp.origin = Vector2.zero;
 
 		Futile.instance.Init(fp);
@@ -27,20 +25,36 @@ public class WTMain : MonoBehaviour {
 
 		FPWorld.Create(64.0f);
 
-		FSprite s = new FSprite("whiteSquare");
+		FSprite squareSprite = new FSprite("coolSquare");
 
-		frog = new WTPhysicsNode("frog");
-		frog.AddChild(s);
-		frog.physicsComponent.AddRigidBody();
-		frog.physicsComponent.AddBoxCollider(s.width, s.height);
-		frog.physicsComponent.SetupPhysicMaterial();
-		frog.SetPosition(WTUtils.screenCenter);
-		frog.UpdatePositions();
+		WTPhysicsNode square = new WTPhysicsNode("square");
+		square.AddChild(squareSprite);
+		square.physicsComponent.AddRigidBody(1, 10);
+		square.physicsComponent.AddBoxCollider(squareSprite.width, squareSprite.height);
+		square.physicsComponent.SetupPhysicMaterial(1.0f, 0.0f, 0.0f, PhysicMaterialCombine.Maximum);
+		square.SetNewPosition(WTUtils.screenCenter);
 
-		frog.physicsComponent.StartPhysics();
-		frog.physicsComponent.AddForceAtPosition(100, 2000, frog.GetPosition().x, frog.GetPosition().y+50);
+		square.physicsComponent.StartPhysics();
+		square.physicsComponent.AddForce(7000, 5000);
 
-		Futile.stage.AddChild(frog);
+		Futile.stage.AddChild(square);
+
+		float wallThickness = 10;
+
+		WTWall leftWall = new WTWall(wallThickness, Futile.screen.height);
+		WTWall rightWall = new WTWall(wallThickness, Futile.screen.height);
+		WTWall bottomWall = new WTWall(Futile.screen.width, wallThickness);
+		WTWall topWall = new WTWall(Futile.screen.width, wallThickness);
+
+		leftWall.SetPosition(wallThickness/2f, Futile.screen.halfHeight);
+		rightWall.SetPosition(Futile.screen.width - wallThickness/2f, Futile.screen.halfHeight);
+		bottomWall.SetPosition(Futile.screen.halfWidth, wallThickness/2f);
+		topWall.SetPosition(Futile.screen.halfWidth, Futile.screen.height - wallThickness/2f);
+
+		Futile.stage.AddChild(leftWall);
+		Futile.stage.AddChild(rightWall);
+		Futile.stage.AddChild(bottomWall);
+		Futile.stage.AddChild(topWall);
 	}
 	
 	void Update() {

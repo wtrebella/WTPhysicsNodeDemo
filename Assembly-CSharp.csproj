@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\WTPhysicsNode.cs" />
      <Compile Include="Assets\Scripts\WTSpriteComponent.cs" />
      <Compile Include="Assets\Scripts\WTUtils.cs" />
+     <Compile Include="Assets\Scripts\WTWall.cs" />
      <None Include="Assets\Resources\Atlases\MainSheet-res1.txt" />
      <None Include="Assets\Resources\Atlases\MainSheet-res4.txt" />
      <None Include="Assets\Plugins\Futile\Resources\Shaders\AdditiveColor.shader" />

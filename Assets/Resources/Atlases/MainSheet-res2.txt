@@ -2,7 +2,7 @@
 
 "Debug/Circle.psd":
 {
-	"frame": {"x":3,"y":910,"w":64,"h":64},
+	"frame": {"x":88,"y":831,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -10,7 +10,7 @@
 },
 "Debug/Square.psd":
 {
-	"frame": {"x":3,"y":842,"w":64,"h":64},
+	"frame": {"x":71,"y":906,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
@@ -18,11 +18,19 @@
 },
 "Debug/Triangle.psd":
 {
-	"frame": {"x":3,"y":774,"w":64,"h":64},
+	"frame": {"x":3,"y":906,"w":64,"h":64},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":64},
 	"sourceSize": {"w":64,"h":64}
+},
+"coolSquare.psd":
+{
+	"frame": {"x":3,"y":699,"w":128,"h":128},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":128},
+	"sourceSize": {"w":128,"h":128}
 },
 "franchise.png":
 {
@@ -34,7 +42,7 @@
 },
 "stupidTriangle.psd":
 {
-	"frame": {"x":3,"y":699,"w":81,"h":71},
+	"frame": {"x":3,"y":831,"w":81,"h":71},
 	"rotated": false,
 	"trimmed": true,
 	"spriteSourceSize": {"x":87,"y":17,"w":81,"h":71},
@@ -42,7 +50,7 @@
 },
 "whiteSquare.png":
 {
-	"frame": {"x":3,"y":978,"w":25,"h":25},
+	"frame": {"x":3,"y":974,"w":25,"h":25},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":25,"h":25},
@@ -55,6 +63,6 @@
 	"format": "RGBA8888",
 	"size": {"w":2048,"h":1024},
 	"scale": "0.5",
-	"smartupdate": "$TexturePacker:SmartUpdate:58731452b8bc6eff9045a229217402bb$"
+	"smartupdate": "$TexturePacker:SmartUpdate:24b203391c40fcf2e8da21254cae9835$"
 }
 }
