@@ -6,7 +6,7 @@ public static class WTUtils {
 	public static PhysicMaterial defaultPhysicMaterial {get; private set;}
 	public static float defaultRigidBodyAngularDrag {get; private set;}
 	public static float defaultRigidBodyMass {get; private set;}
-
+	public static float defaultRigidBodyMaxAngularVelocity = 10000;
 	public static void Init() {
 		screenCenter = new Vector2(Futile.screen.halfWidth, Futile.screen.halfHeight);
 

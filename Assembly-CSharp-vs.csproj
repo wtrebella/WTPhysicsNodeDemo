@@ -48,6 +48,7 @@
      <Compile Include="Assets\Scripts\WTComponent.cs" />
      <Compile Include="Assets\Scripts\WTEntity.cs" />
      <Compile Include="Assets\Scripts\WTMain.cs" />
+     <Compile Include="Assets\Scripts\WTPhysicsComponent.cs" />
      <Compile Include="Assets\Scripts\WTPhysicsNode.cs" />
      <Compile Include="Assets\Scripts\WTSpriteComponent.cs" />
      <Compile Include="Assets\Scripts\WTUtils.cs" />

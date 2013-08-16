@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class WTMain : MonoBehaviour {
-	public static FPWorld physicsWorld;
+	WTPhysicsNode frog;
 
 	void Start() {
 		Go.defaultEaseType = EaseType.SineInOut;
@@ -25,62 +25,27 @@ public class WTMain : MonoBehaviour {
 
 		WTUtils.Init();
 
-		physicsWorld = FPWorld.Create(64.0f);
+		FPWorld.Create(64.0f);
 
-		FSprite floorSprite = new FSprite("whiteSquare");
-		floorSprite.width = Futile.screen.width * 2;
-		floorSprite.height = 10;
+		FSprite s = new FSprite("whiteSquare");
 
-		WTPhysicsNode floor = WTPhysicsNode.Create();
-		floor.Init(new Vector2(Futile.screen.halfWidth, 5), 0, true);
-		floor.AddBoxCollider(floorSprite.width, floorSprite.height);
-		floor.SetupPhysicMaterial();
+		frog = new WTPhysicsNode("frog");
+		frog.AddChild(s);
+		frog.physicsComponent.AddRigidBody();
+		frog.physicsComponent.AddBoxCollider(s.width, s.height);
+		frog.physicsComponent.SetupPhysicMaterial();
+		frog.SetPosition(WTUtils.screenCenter);
+		frog.UpdatePositions();
 
-		FSprite leftWallSprite = new FSprite("whiteSquare");
-		leftWallSprite.width = 10;
-		leftWallSprite.height = Futile.screen.height * 2;
+		frog.physicsComponent.StartPhysics();
+		frog.physicsComponent.AddForceAtPosition(100, 2000, frog.GetPosition().x, frog.GetPosition().y+50);
 
-		WTPhysicsNode leftWall = WTPhysicsNode.Create();
-		leftWall.Init(new Vector2(5, Futile.screen.halfHeight), 0, true);
-		leftWall.AddBoxCollider(leftWallSprite.width, leftWallSprite.height);
-		leftWall.SetupPhysicMaterial();
-
-		FSprite rightWallSprite = new FSprite("whiteSquare");
-		rightWallSprite.width = 10;
-		rightWallSprite.height = Futile.screen.height * 2;
-
-		WTPhysicsNode rightWall = WTPhysicsNode.Create();
-		rightWall.Init(new Vector2(Futile.screen.width - 5, Futile.screen.halfHeight), 0, true);
-		rightWall.AddBoxCollider(rightWallSprite.width, rightWallSprite.height);
-		rightWall.SetupPhysicMaterial();
-
-		floor.container.AddChild(floorSprite);
-		Futile.stage.AddChild(floor.container);
-
-		leftWall.container.AddChild(leftWallSprite);
-		Futile.stage.AddChild(leftWall.container);
-
-		rightWall.container.AddChild(rightWallSprite);
-		Futile.stage.AddChild(rightWall.container);
-
-		for (int i = 0; i < 100; i++) {
-			FSprite s = new FSprite("whiteSquare");
-			s.width = Random.Range(5, 30);
-			s.height = Random.Range(5, 30);
-			s.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-
-			WTPhysicsNode p = WTPhysicsNode.Create();
-			p.Init(new Vector2(Random.Range(20, Futile.screen.width - 20), Random.Range(100, Futile.screen.height)), Random.Range(0, 360), true);
-			p.AddBoxCollider(s.width, s.height);
-			p.AddRigidBody();
-			p.SetupPhysicMaterial();
-
-			p.container.AddChild(s);
-			Futile.stage.AddChild(p.container);
-		}
+		Futile.stage.AddChild(frog);
 	}
 	
 	void Update() {
-
+//		if (frog.physicsNode.CanMoveInCode()) {
+//			frog.rotation += 3;
+//		}
 	}
 }
