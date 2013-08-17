@@ -5,6 +5,9 @@ using System;
 public class WTPhysicsComponent : MonoBehaviour
 {
 	public event Action<Collision> SignalOnCollisionEnter;
+	public event Action<Collider> SignalOnTriggerEnter;
+	public event Action<Collider> SignalOnTriggerExit;
+	public event Action<Collider> SignalOnTriggerStay;
 
 	public static WTPhysicsComponent Create(string name) {
 		GameObject physicsNodeGO = new GameObject(name);
@@ -16,7 +19,7 @@ public class WTPhysicsComponent : MonoBehaviour
 
 	public FPNodeLink nodeLink;
 
-	public void Init(Vector2 startPos, float startRotation, bool shouldLinkRotation, FContainer container) {
+	public void Init(Vector2 startPos, float startRotation, FContainer container) {
 		this.container = container;
 		container.rotation = startRotation;
 
@@ -25,14 +28,21 @@ public class WTPhysicsComponent : MonoBehaviour
 		gameObject.transform.parent = FPWorld.instance.transform;
 
 		nodeLink = gameObject.AddComponent<FPNodeLink>();
-		nodeLink.Init(container, shouldLinkRotation);
+		nodeLink.Init(container, true);
 	}
 
+	// once you call this, you should NOT try to control the position or rotation of the node in code
+	// all movement will be determined by the physics engine
 	public void StartPhysics() {
+		if (rigidbody == null) return;
+
 		rigidbody.isKinematic = false;
 	}
 
+	// once you call this, the physics will stop and you'll be able to control its position and rotation in code
 	public void StopPhysics() {
+		if (rigidbody == null) return;
+
 		rigidbody.isKinematic = true;
 	}
 
@@ -47,43 +57,40 @@ public class WTPhysicsComponent : MonoBehaviour
 		rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
 		rb.angularDrag = angularDrag;
 		rb.mass = mass;
-		rb.maxAngularVelocity = WTUtils.defaultRigidBodyMaxAngularVelocity;
+		rb.maxAngularVelocity = 10000;
 		rb.isKinematic = true;
 		return rb;
 	}
 
-	public Rigidbody AddRigidBody() {
-		return AddRigidBody(WTUtils.defaultRigidBodyAngularDrag, WTUtils.defaultRigidBodyMass);
-	}
-
-	public FPPolygonalCollider AddPolygonalCollider(Vector2[] vertices, bool shouldDecomposeIntoConvexPolygons, bool withDebugView = false) {
+	public FPPolygonalCollider AddPolygonalCollider(Vector2[] vertices, bool withDebugView = false) {
 		FPPolygonalCollider fp = gameObject.AddComponent<FPPolygonalCollider>();
-		fp.Init(new FPPolygonalData(vertices, shouldDecomposeIntoConvexPolygons));
+		fp.Init(new FPPolygonalData(vertices, false));
 
 		if (withDebugView) FPDebugRenderer.Create(gameObject, Futile.stage, 0x00FF00, false);
 
 		return fp;
 	}
 
-	public SphereCollider AddSphereCollider(float radius) {
+	public SphereCollider AddSphereCollider(float radius, bool withDebugView = false) {
 		SphereCollider sc = gameObject.AddComponent<SphereCollider>();
 		sc.radius = radius * FPhysics.POINTS_TO_METERS;
+
+		if (withDebugView) FPDebugRenderer.Create(gameObject, Futile.stage, 0x00FF00, false);
+
 		return sc;
 	}
 
-	public BoxCollider AddBoxCollider(Vector2 size) {
+	public BoxCollider AddBoxCollider(Vector2 size, bool withDebugView = false) {
 		BoxCollider bc = gameObject.AddComponent<BoxCollider>();
 		bc.size = new Vector3(size.x * FPhysics.POINTS_TO_METERS, size.y * FPhysics.POINTS_TO_METERS, FPhysics.DEFAULT_Z_THICKNESS);
+
+		if (withDebugView) FPDebugRenderer.Create(gameObject, Futile.stage, 0x00FF00, false);
+
 		return bc;
 	}
 
-	public BoxCollider AddBoxCollider(float x, float y) {
-		return AddBoxCollider(new Vector2(x, y));
-	}
-
-	public PhysicMaterial SetupPhysicMaterial() {
-		PhysicMaterial pm = WTUtils.defaultPhysicMaterial;
-		return SetupPhysicMaterial(pm.bounciness, pm.dynamicFriction, pm.staticFriction, pm.frictionCombine);
+	public BoxCollider AddBoxCollider(float x, float y, bool withDebugView = false) {
+		return AddBoxCollider(new Vector2(x, y), withDebugView);
 	}
 
 	public PhysicMaterial SetupPhysicMaterial(float bounciness, float dynamicFriction, float staticFriction, PhysicMaterialCombine frictionCombine = PhysicMaterialCombine.Average) {
@@ -102,20 +109,32 @@ public class WTPhysicsComponent : MonoBehaviour
 		if (SignalOnCollisionEnter != null) SignalOnCollisionEnter(coll);
 	}
 
+	void OnTriggerEnter(Collider coll) {
+		if (SignalOnTriggerEnter != null) SignalOnTriggerEnter(coll);
+	}
+
+	void OnTriggerExit(Collider coll) {
+		if (SignalOnTriggerExit != null) SignalOnTriggerExit(coll);
+	}
+
+	void OnTriggerStay(Collider coll) {
+		if (SignalOnTriggerStay != null) SignalOnTriggerStay(coll);
+	}
+
 	public void AddForce(float xForce, float yForce, ForceMode forceMode = ForceMode.Force) {
+		if (rigidbody == null) return;
+
 		rigidbody.AddForce(new Vector3(xForce, yForce, 0), forceMode);
 	}
 
 	public void AddForceAtPosition(float xForce, float yForce, float xPosition, float yPosition, ForceMode forceMode = ForceMode.Force) {
+		if (rigidbody == null) return;
+
 		rigidbody.AddForceAtPosition(new Vector3(xForce, yForce, 0), new Vector2(xPosition, yPosition) * FPhysics.POINTS_TO_METERS, forceMode);
 	}
 
-	public Vector2 GetPosition() {
-		return new Vector2(transform.position.x * FPhysics.METERS_TO_POINTS, transform.position.y * FPhysics.METERS_TO_POINTS);
-	}
-
 	public void SetPosition(Vector2 pos) {
-		if (CanMoveInCode()) {
+		if (!IsControlledByPhysicsEngine()) {
 			gameObject.transform.position = new Vector3(pos.x * FPhysics.POINTS_TO_METERS,pos.y * FPhysics.POINTS_TO_METERS,0);
 		}
 		else {
@@ -123,12 +142,8 @@ public class WTPhysicsComponent : MonoBehaviour
 		}
 	}
 
-	public float GetRotation() {
-		return gameObject.transform.rotation.eulerAngles.z;
-	}
-
 	public void SetRotation(float rot) {
-		if (CanMoveInCode()) {
+		if (!IsControlledByPhysicsEngine()) {
 			gameObject.transform.rotation = Quaternion.Euler(0, 0, -rot);
 		}
 		else {
@@ -136,7 +151,7 @@ public class WTPhysicsComponent : MonoBehaviour
 		}
 	}
 
-	public bool CanMoveInCode() {
-		return (rigidbody != null && rigidbody.isKinematic) || rigidbody == null;
+	public bool IsControlledByPhysicsEngine() {
+		return !((rigidbody != null && rigidbody.isKinematic) || rigidbody == null);
 	}
 }
