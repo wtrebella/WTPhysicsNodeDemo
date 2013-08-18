@@ -45,6 +45,10 @@ public class WTPhysicsComponent : MonoBehaviour
 
 		rigidbody.isKinematic = true;
 	}
+	
+	public void SetIsTrigger(bool isTrigger) {
+		gameObject.GetComponent<Collider>().isTrigger = isTrigger;
+	}
 
 	public void Destroy() {
 		UnityEngine.Object.Destroy(gameObject);
