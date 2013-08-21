@@ -47,6 +47,10 @@ public class WTPhysicsComponent : MonoBehaviour
 
 		rigidbody.isKinematic = true;
 	}
+	
+	public void SetIsTrigger(bool isTrigger) {
+		gameObject.GetComponent<Collider>().isTrigger = isTrigger;
+	}
 
 	public Rect GetGlobalHitBox() {
 		return new Rect(gameObject.collider.bounds.min.x * FPhysics.METERS_TO_POINTS,
