@@ -58,7 +58,7 @@ public class WTMain : MonoBehaviour {
 		FSprite squareSprite = new FSprite("coolSquare");
 		square = new WTPhysicsNode("square");
 		square.AddChild(squareSprite);
-		square.SetNewPosition(Futile.screen.width / 4f, Futile.screen.halfHeight);
+		square.SetPosition(Futile.screen.width / 4f, Futile.screen.halfHeight);
 		square.physicsComponent.AddBoxCollider(squareSprite.width, squareSprite.height);
 		physicsNodes.Add(square);
 
@@ -66,7 +66,7 @@ public class WTMain : MonoBehaviour {
 		FSprite circleSprite = new FSprite("coolCircle");
 		circle = new WTPhysicsNode("circle");
 		circle.AddChild(circleSprite);
-		circle.SetNewPosition(Futile.screen.width / 4f * 2f, Futile.screen.halfHeight);
+		circle.SetPosition(Futile.screen.width / 4f * 2f, Futile.screen.halfHeight);
 		circle.physicsComponent.AddSphereCollider(circleSprite.width / 2f);
 		physicsNodes.Add(circle);
 
@@ -74,7 +74,7 @@ public class WTMain : MonoBehaviour {
 		FSprite polygonSprite = new FSprite("coolPolygon");
 		polygon = new WTPhysicsNode("polygon");
 		polygon.AddChild(polygonSprite);
-		polygon.SetNewPosition(Futile.screen.width / 4f * 3f, Futile.screen.halfHeight);
+		polygon.SetPosition(Futile.screen.width / 4f * 3f, Futile.screen.halfHeight);
 		Vector2[] vertices = new Vector2[] {
 			new Vector2(-27, -10),
 			new Vector2(-14, 6),
@@ -113,8 +113,8 @@ public class WTMain : MonoBehaviour {
 
 		if (!polygon.physicsComponent.IsControlledByPhysicsEngine()) {
 			if (Time.time < delayUntilPolygonIsControlledByPhysics) {
-				polygon.SetNewRotation(polygon.rotation + 1000 * Time.deltaTime);
-				polygon.SetNewPosition(new Vector2(polygon.x + 10 * Time.deltaTime, polygon.y + 10 * Time.deltaTime));
+				polygon.rotation = polygon.rotation + 1000 * Time.deltaTime;
+				polygon.SetPosition(new Vector2(polygon.x + 10 * Time.deltaTime, polygon.y + 10 * Time.deltaTime));
 			}
 			else polygon.physicsComponent.StartPhysics();
 		}

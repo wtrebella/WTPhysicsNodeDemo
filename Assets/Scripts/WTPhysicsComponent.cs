@@ -5,6 +5,8 @@ using System;
 public class WTPhysicsComponent : MonoBehaviour
 {
 	public event Action<Collision> SignalOnCollisionEnter;
+	public event Action<Collision> SignalOnCollisionStay;
+	public event Action<Collision> SignalOnCollisionExit;
 	public event Action<Collider> SignalOnTriggerEnter;
 	public event Action<Collider> SignalOnTriggerExit;
 	public event Action<Collider> SignalOnTriggerStay;
@@ -15,11 +17,11 @@ public class WTPhysicsComponent : MonoBehaviour
 		return physicsNode;
 	}
 	
-	public FContainer container;
+	public WTPhysicsNode container;
 
 	public FPNodeLink nodeLink;
 
-	public void Init(Vector2 startPos, float startRotation, FContainer container) {
+	public void Init(Vector2 startPos, float startRotation, WTPhysicsNode container) {
 		this.container = container;
 		container.rotation = startRotation;
 
@@ -44,6 +46,17 @@ public class WTPhysicsComponent : MonoBehaviour
 		if (rigidbody == null) return;
 
 		rigidbody.isKinematic = true;
+	}
+
+	public Rect GetGlobalHitBox() {
+		return new Rect(gameObject.collider.bounds.min.x * FPhysics.METERS_TO_POINTS,
+		                gameObject.collider.bounds.min.y * FPhysics.METERS_TO_POINTS,
+		                gameObject.collider.bounds.size.x * FPhysics.METERS_TO_POINTS,
+		                gameObject.collider.bounds.size.y * FPhysics.METERS_TO_POINTS);
+	}
+
+	public void SetIsTrigger(bool isTrigger) {
+		gameObject.GetComponent<Collider>().isTrigger = isTrigger;
 	}
 
 	public void Destroy() {
@@ -107,6 +120,14 @@ public class WTPhysicsComponent : MonoBehaviour
 
 	void OnCollisionEnter(Collision coll) {
 		if (SignalOnCollisionEnter != null) SignalOnCollisionEnter(coll);
+	}
+
+	void OnCollisionStay(Collision coll) {
+		if (SignalOnCollisionStay != null) SignalOnCollisionStay(coll);
+	}
+
+	void OnCollisionExit(Collision coll) {
+		if (SignalOnCollisionExit != null) SignalOnCollisionExit(coll);
 	}
 
 	void OnTriggerEnter(Collider coll) {

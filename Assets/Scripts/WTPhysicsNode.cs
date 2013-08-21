@@ -30,13 +30,19 @@ public class WTPhysicsNode : FContainer {
 		physicsComponent.SetRotation(rotation);
 	}
 
+	public bool CompareTag(string tagToCompare) {
+		return physicsComponent.gameObject.CompareTag(tagToCompare);
+	}
+
 	private void InitPhysicsComponent(string name) {
 		physicsComponent = WTPhysicsComponent.Create(name);
 		physicsComponent.Init(Vector2.zero, 0, this);
 		physicsComponent.SignalOnCollisionEnter += HandleOnCollisionEnter;
+		physicsComponent.SignalOnCollisionStay += HandleOnCollisionStay;
+		physicsComponent.SignalOnCollisionExit += HandleOnCollisionExit;
 		physicsComponent.SignalOnTriggerEnter += HandleOnTriggerEnter;
-		physicsComponent.SignalOnTriggerEnter += HandleOnTriggerExit;
-		physicsComponent.SignalOnTriggerEnter += HandleOnTriggerStay;
+		physicsComponent.SignalOnTriggerExit += HandleOnTriggerExit;
+		physicsComponent.SignalOnTriggerStay += HandleOnTriggerStay;
 		UpdatePosition();
 		UpdateRotation();
 	}
@@ -60,11 +66,15 @@ public class WTPhysicsNode : FContainer {
 
 	// this will be called whenever something hits it
 	virtual public void HandleOnCollisionEnter(Collision coll) {
-		// take these out obviously if you want to keep this method abstract. i just put these in for ease.
 
-		if (coll.gameObject.collider.GetType() == typeof(BoxCollider)) FSoundManager.PlaySound("boop1", 0.1f);
-		if (coll.gameObject.collider.GetType() == typeof(SphereCollider)) FSoundManager.PlaySound("boop2", 0.1f);
-		if (coll.gameObject.collider.GetType() == typeof(MeshCollider)) FSoundManager.PlaySound("boop3", 0.1f);
+	}
+
+	virtual public void HandleOnCollisionStay(Collision coll) {
+
+	}
+
+	virtual public void HandleOnCollisionExit(Collision coll) {
+
 	}
 
 	// if you set the physicsComponent to be a trigger, these methods will be called when another collider passes through
@@ -80,17 +90,30 @@ public class WTPhysicsNode : FContainer {
 
 	}
 
-	public void SetNewPosition(float xNew, float yNew) {
-		SetPosition(xNew, yNew);
-		UpdatePosition();
+	override public float x {
+		get {return _x;}
+		set {
+			_x = value;
+			_isMatrixDirty = true;
+			UpdatePosition();
+		}
 	}
 
-	public void SetNewPosition(Vector2 position) {
-		SetNewPosition(position.x, position.y);
+	override public float y {
+		get {return _y;}
+		set {
+			_y = value;
+			_isMatrixDirty = true;
+			UpdatePosition();
+		}
 	}
 
-	public void SetNewRotation(float rot) {
-		rotation = rot;
-		UpdateRotation();
+	override public float rotation {
+		get {return _rotation;}
+		set {
+			_rotation = value;
+			_isMatrixDirty = true;
+			UpdateRotation();
+		}
 	}
 }
