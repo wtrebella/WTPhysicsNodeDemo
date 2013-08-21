@@ -59,10 +59,6 @@ public class WTPhysicsComponent : MonoBehaviour
 		                gameObject.collider.bounds.size.y * FPhysics.METERS_TO_POINTS);
 	}
 
-	public void SetIsTrigger(bool isTrigger) {
-		gameObject.GetComponent<Collider>().isTrigger = isTrigger;
-	}
-
 	public void Destroy() {
 		UnityEngine.Object.Destroy(gameObject);
 
